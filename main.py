@@ -8,6 +8,8 @@ import threading
 from datetime import datetime, timedelta, time
 import mysql.connector
 import random
+from User_class import User
+from scheduler import schedule_single_reminder, run_scheduler
 
 # Your bot token (keep this secure!)
 TOKEN = '7447014134:AAEIDJfDEqI8iA_POXnRhPPc4_LZXbG9Tf0'
@@ -16,19 +18,6 @@ topics = ["Topic 1", "Topic 2", "Topic 3", "Topic 4", "Topic 5"]
 reminder_time = time(18, 53, 00).strftime("%H:%M")
 user_data = {}
 
-class User:
-    def __init__(self):
-        self.chat_id= None
-        self.name = None
-        self.phone = None
-        self.countries = None
-        self.school = None
-        self.grade = None
-        self.consultation = None
-        self.consultation_details = None
-        self.traction_started = False
-        self.streak = 0
-        self.goals = None
 
 def generate_main_menu():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -320,21 +309,7 @@ def save_activity_description(message):
     except Exception as e:
         bot.send_message(message.chat.id, f"An error occurred: {str(e)}")
 
-def schedule_single_reminder(hours, chat_id):
-    try:
-        reminder_time = datetime.now() + timedelta(hours=3)
-        schedule.every().at(reminder_time.strftime("%H:%M")).do(send_reminder, chat_id).tag(f"reminder_{chat_id}")
-        schedule.clear(f"reminder_{chat_id}")
-    except Exception as e:
-        print(f"An error occurred while scheduling single reminder: {str(e)}")
 
-# Run the scheduler in a separate thread
-def run_scheduler():
-    while True:
-        try:
-            schedule.run_pending()
-        except Exception as e:
-            print(f"An error occurred in the scheduler: {str(e)}")
 
 schedule_thread = threading.Thread(target=run_scheduler)
 schedule_thread.start()

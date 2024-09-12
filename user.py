@@ -7,9 +7,6 @@ db = mysql.connector.connect(
     database="user"
 )
 
-
-
-
 mycursor = db.cursor()
         
 db.commit()
