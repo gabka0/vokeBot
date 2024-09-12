@@ -12,7 +12,7 @@ from User_class import User
 from scheduler import schedule_single_reminder, run_scheduler
 
 # Your bot token (keep this secure!)
-TOKEN = '7447014134:AAEIDJfDEqI8iA_POXnRhPPc4_LZXbG9Tf0'
+TOKEN = TOKEN
 bot = telebot.TeleBot(TOKEN)
 topics = ["Topic 1", "Topic 2", "Topic 3", "Topic 4", "Topic 5"]
 reminder_time = time(18, 53, 00).strftime("%H:%M")
